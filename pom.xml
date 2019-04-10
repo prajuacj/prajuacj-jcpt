@@ -77,6 +77,11 @@
 				<artifactId>prajuacj-system</artifactId>
 				<version>${project-version}</version>
 			</dependency>
+			<dependency>
+				<groupId>com.prajuacj.jcpt</groupId>
+				<artifactId>prajuacj-service</artifactId>
+				<version>${project-version}</version>
+			</dependency>
 
 			<dependency>
 				<groupId>junit</groupId>

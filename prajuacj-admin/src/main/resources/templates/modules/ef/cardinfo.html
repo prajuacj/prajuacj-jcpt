@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+		<#include "/header.html">
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+        	<div class="form-group col-sm-2">
+				<input type="text" class="form-control" v-model="q.username" @keyup.enter="query" placeholder="用户名">
+			</div>
+			<a class="btn btn-default" @click="query">查询</a>
+			<#if shiro.hasPermission("ef:cardinfo:save")>
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			</#if>
+			<#if shiro.hasPermission("ef:cardinfo:update")>
+            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			</#if>
+			<#if shiro.hasPermission("ef:cardinfo:delete")>
+            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+			</#if>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+														                    <div class="form-group">
+                        <div class="col-sm-2 control-label">卡编号</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cardInfo.cardNo" placeholder="卡编号"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">卡槽地址编号</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cardInfo.slotNo" placeholder="卡槽地址编号"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">初始流量（M）</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cardInfo.initFlow" placeholder="初始流量（M）"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">剩余流量</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cardInfo.residualFlow" placeholder="剩余流量"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">运营商ID</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cardInfo.operatorId" placeholder="运营商ID"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">card状态（0：有空且正常；1：正常使用；2：异常；3：已经用完）</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cardInfo.cardStatus" placeholder="card状态（0：有空且正常；1：正常使用；2：异常；3：已经用完）"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">iccid号</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cardInfo.iccid" placeholder="iccid号"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">创建者</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cardInfo.createBy" placeholder="创建者"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"></div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cardInfo.createTime" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">更新者</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cardInfo.updateBy" placeholder="更新者"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label"></div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cardInfo.updateTime" placeholder=""/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">备注</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="cardInfo.remark" placeholder="备注"/>
+                        </div>
+                    </div>
+							            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/ef/cardinfo.js?_${.now?long}"></script>
+</body>
+</html>
